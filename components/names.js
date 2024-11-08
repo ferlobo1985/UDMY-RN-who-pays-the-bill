@@ -66,6 +66,10 @@ export default function Names(){
             modal:true
         })
     }
+
+    const resetApp = () => {
+        setState(DEFAULTS)
+    }
  
 
     return(
@@ -109,9 +113,9 @@ export default function Names(){
 
 
 
-            <Text style={{fontSize:30}}>
+            {/* <Text style={{fontSize:30}}>
                 {JSON.stringify(state,null,'\t')}
-            </Text>
+            </Text> */}
 
             { state.names.length > 1 &&
                 <AppButton
@@ -124,6 +128,7 @@ export default function Names(){
 
             <Result
                 state={state}
+                resetApp={resetApp}
             />
 
         </View>
