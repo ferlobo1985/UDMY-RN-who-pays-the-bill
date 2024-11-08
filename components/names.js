@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Alert, Button, Keyboard, StyleSheet, Text, TextInput, View} from 'react-native'
+import { Alert, Button, FlatList, Keyboard, Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
 import { AppStyles } from '../constants/styles';
 
 
@@ -42,6 +42,15 @@ export default function Names(){
         }
         return true
     }
+
+    const removeName = (index) => {
+        let names = [...state.names];
+        names.splice(index,1);
+
+        handleState({
+            names
+        })
+    }
  
 
     return(
@@ -61,6 +70,30 @@ export default function Names(){
                 />
             </>
 
+
+            {/* LIST OF NAMES */}
+            { state.names && 
+                <FlatList
+                    style={{marginBottom:20,maxHeight:300}}
+                    data={state.names}
+                    renderItem={({item,index})=>{
+                        return(
+                            <Pressable
+                                style={styles.nameItem}
+                                onPress={()=> removeName(index)}
+                            >
+                                <Text style={{padding:10,fontSize:20}}>
+                                    {item}
+                                </Text>
+                            </Pressable>
+                        )
+                    }}
+                    keyExtractor={(item)=> item}
+                />
+            }
+
+
+
             <Text style={{fontSize:30}}>
                 {JSON.stringify(state,null,'\t')}
             </Text>
@@ -79,5 +112,13 @@ const styles = StyleSheet.create({
         borderWidth:1,
         padding:10,
         backgroundColor:'#fff'
+    },
+    nameItem:{
+        borderColor:AppStyles.color.airBlue,
+        borderWidth:1,
+        borderRadius:8,
+        marginBottom:5,
+        marginRight:5,
+        alignItems:'center'
     }
 })
