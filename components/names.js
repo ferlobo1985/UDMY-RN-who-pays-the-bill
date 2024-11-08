@@ -19,14 +19,30 @@ export default function Names(){
 
     const addNamesToList = () => {
         const userName = state.inputName;
-
-        handleState({
-            names:[...state.names,userName],
-            inputName:''
-        })
-        Keyboard.dismiss()
-
+        const validate = validateHandler(userName);
+        if(!validate.error){
+            /// ADD NAME TO ARRAY
+            handleState({
+                names:[...state.names,userName],
+                inputName:''
+            })
+            Keyboard.dismiss()
+        } else {
+            /// SHOW ERROR
+            Alert.alert(validate.message)
+        }
     }
+
+    const validateHandler = (value) => {
+        if(value === ''){
+            return {error:true, message:'Sorry, no empty name'}
+        }
+        if(state.names.includes(value)){
+            return {error:true, message:'Sorry, names must be unique'}
+        }
+        return true
+    }
+ 
 
     return(
         <View style={{width:'80%'}}>
