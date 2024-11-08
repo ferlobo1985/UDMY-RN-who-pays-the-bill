@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Alert, Button, StyleSheet, Text, TextInput, View} from 'react-native'
+import { Alert, Button, Keyboard, StyleSheet, Text, TextInput, View} from 'react-native'
 import { AppStyles } from '../constants/styles';
 
 
@@ -15,6 +15,18 @@ const DEFAULTS = {
 export default function Names(){
     const [state, setState ] = useState(DEFAULTS)
     const handleInput = (value)=> setState({...state,inputName:value})
+    const handleState = (props)=> setState({...state,...props})
+
+    const addNamesToList = () => {
+        const userName = state.inputName;
+
+        handleState({
+            names:[...state.names,userName],
+            inputName:''
+        })
+        Keyboard.dismiss()
+
+    }
 
     return(
         <View style={{width:'80%'}}>
@@ -27,11 +39,17 @@ export default function Names(){
                 />
                 <AppButton
                     text='Add name'
-                    onPress={()=> Alert.alert('Hello')}
+                    onPress={()=> addNamesToList()}
                     backColor={AppStyles.color.airBlue}
                     backColorPress={AppStyles.color.darkBlue}
                 />
             </>
+
+            <Text style={{fontSize:30}}>
+                {JSON.stringify(state,null,'\t')}
+            </Text>
+
+
         </View>
     )
 }
