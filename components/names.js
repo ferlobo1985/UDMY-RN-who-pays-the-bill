@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { Alert, Button, StyleSheet, Text, TextInput, View} from 'react-native'
-import { AppStyles } from '../constants/styles'
+import { AppStyles } from '../constants/styles';
+
+
+import AppButton from './ui/button';
 
 const DEFAULTS = {
     modal:false,
@@ -15,15 +18,18 @@ export default function Names(){
 
     return(
         <View style={{width:'80%'}}>
+            {/* INPUT BUTTON */}
             <>
                 <TextInput
                     value={state.inputName}
                     onChangeText={(value)=>handleInput(value)}
                     style={styles.input}
                 />
-                <Button
-                    title='Add name'
+                <AppButton
+                    text='Add name'
                     onPress={()=> Alert.alert('Hello')}
+                    backColor={AppStyles.color.airBlue}
+                    backColorPress={AppStyles.color.darkBlue}
                 />
             </>
         </View>
