@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Alert, Button, FlatList, Keyboard, Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
 import { AppStyles } from '../constants/styles';
+import Result from './result';
 
 
 import AppButton from './ui/button';
@@ -51,6 +52,20 @@ export default function Names(){
             names
         })
     }
+
+
+    const getRandomName = () => {
+        return state.names[Math.floor(Math.random()* state.names.length)]
+    }
+
+    const generateResult = () => {
+        const rand = getRandomName();
+
+        handleState({
+            result:rand,
+            modal:true
+        })
+    }
  
 
     return(
@@ -98,6 +113,18 @@ export default function Names(){
                 {JSON.stringify(state,null,'\t')}
             </Text>
 
+            { state.names.length > 1 &&
+                <AppButton
+                    text="Get a looser :)"
+                    onPress={()=> generateResult()}
+                    backColor={AppStyles.color.darkBlue}
+                    backColorPress={AppStyles.color.airBlue}
+                />
+            }
+
+            <Result
+                state={state}
+            />
 
         </View>
     )
